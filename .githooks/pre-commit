@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Git pre-commit フック
+# コミット前に品質チェックを自動実行
+
+set -e
+
+# プロジェクトルートへ移動
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+
+echo "Pre-commit フック実行中..."
+
+# 品質チェックスクリプト実行
+if ! "$PROJECT_ROOT/scripts/check.sh"; then
+    echo "品質チェックに失敗しました。コミットを中止します。"
+    exit 1
+fi
+
+echo "Pre-commit フック完了"
+

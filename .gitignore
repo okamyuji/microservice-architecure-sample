@@ -1,0 +1,38 @@
+# バイナリ
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# テスト関連
+*.test
+coverage/
+*.out
+
+# 依存関係
+vendor/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
+
+# ログ
+*.log
+logs/
+
+# 環境変数
+.env
+.env.local
+.env.*.local
+
