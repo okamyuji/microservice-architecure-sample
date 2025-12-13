@@ -8,8 +8,9 @@ import (
 	"testing"
 	"time"
 
+	"microservice-architecture-sample/pkg/testutil"
+
 	"github.com/nats-io/nats.go"
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/testutil"
 )
 
 // testLogger テスト用ロガー

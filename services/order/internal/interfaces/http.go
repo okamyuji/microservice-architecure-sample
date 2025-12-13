@@ -6,7 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"github.com/yujiokamoto/microservice-architecture-sample/services/order/internal/application"
+	"microservice-architecture-sample/services/order/internal/application"
 )
 
 // CreateOrderRequest 注文作成リクエストボディ

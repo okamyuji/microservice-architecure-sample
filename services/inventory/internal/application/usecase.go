@@ -9,9 +9,9 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/events"
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/outbox"
-	"github.com/yujiokamoto/microservice-architecture-sample/services/inventory/internal/domain"
+	"microservice-architecture-sample/pkg/events"
+	"microservice-architecture-sample/pkg/outbox"
+	"microservice-architecture-sample/services/inventory/internal/domain"
 )
 
 // InventoryUseCase 在庫関連のビジネスロジックを処理

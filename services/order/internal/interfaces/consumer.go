@@ -7,9 +7,9 @@ import (
 
 	"github.com/nats-io/nats.go"
 
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/events"
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/messaging"
-	"github.com/yujiokamoto/microservice-architecture-sample/services/order/internal/application"
+	"microservice-architecture-sample/pkg/events"
+	"microservice-architecture-sample/pkg/messaging"
+	"microservice-architecture-sample/services/order/internal/application"
 )
 
 // EventConsumer NATSからイベントを消費

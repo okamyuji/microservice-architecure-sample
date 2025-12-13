@@ -11,9 +11,9 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/events"
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/outbox"
-	"github.com/yujiokamoto/microservice-architecture-sample/services/payment/internal/domain"
+	"microservice-architecture-sample/pkg/events"
+	"microservice-architecture-sample/pkg/outbox"
+	"microservice-architecture-sample/services/payment/internal/domain"
 )
 
 // PaymentUseCase 決済関連のビジネスロジックを処理

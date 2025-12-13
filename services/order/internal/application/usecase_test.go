@@ -8,11 +8,12 @@ import (
 	"testing"
 	"time"
 
+	"microservice-architecture-sample/pkg/outbox"
+	"microservice-architecture-sample/pkg/testutil"
+	"microservice-architecture-sample/services/order/internal/domain"
+	"microservice-architecture-sample/services/order/internal/infrastructure"
+
 	"github.com/google/uuid"
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/outbox"
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/testutil"
-	"github.com/yujiokamoto/microservice-architecture-sample/services/order/internal/domain"
-	"github.com/yujiokamoto/microservice-architecture-sample/services/order/internal/infrastructure"
 )
 
 // testLogger テスト用ロガー

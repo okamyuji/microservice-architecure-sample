@@ -8,7 +8,7 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"github.com/yujiokamoto/microservice-architecture-sample/services/inventory/internal/domain"
+	"microservice-architecture-sample/services/inventory/internal/domain"
 )
 
 // PostgresInventoryRepository PostgreSQLを使用したInventoryRepository実装

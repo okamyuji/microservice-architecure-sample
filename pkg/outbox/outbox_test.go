@@ -9,7 +9,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/testutil"
+	"microservice-architecture-sample/pkg/testutil"
+
+	"github.com/google/uuid"
 )
 
 // テスト用ロガー
@@ -114,6 +116,11 @@ func TestRelay_Start(t *testing.T) {
 	if err != nil {
 		t.Fatalf("テストDB取得失敗: %v", err)
 	}
+
+	// テスト前にクリーンアップ
+	if err := db.CleanupOrderDB(ctx); err != nil {
+		t.Fatalf("クリーンアップ失敗: %v", err)
+	}
 	defer func() { _ = db.CleanupOrderDB(ctx) }()
 
 	published := make(chan struct{}, 10)
@@ -124,11 +131,12 @@ func TestRelay_Start(t *testing.T) {
 
 	relay := NewRelay(db.Pool, testLogger(), mockPublisher)
 
-	// Outboxにテストデータを挿入
+	// Outboxにテストデータを挿入（動的UUID）
+	testID := uuid.New().String()
 	_, err = db.Pool.Exec(ctx, `
 		INSERT INTO outbox (id, aggregate_type, aggregate_id, event_type, payload, status)
-		VALUES ('11111111-1111-1111-1111-111111111111', 'Test', 'test-1', 'test.relay', '{"test": true}', 'PENDING')
-	`)
+		VALUES ($1, 'Test', 'test-relay-1', 'test.relay', '{"test": true}', 'PENDING')
+	`, testID)
 	if err != nil {
 		t.Fatalf("テストデータ挿入失敗: %v", err)
 	}
@@ -278,6 +286,11 @@ func TestRelay_ProcessMultipleMessages(t *testing.T) {
 	if err != nil {
 		t.Fatalf("テストDB取得失敗: %v", err)
 	}
+
+	// テスト前にクリーンアップ
+	if err := db.CleanupOrderDB(ctx); err != nil {
+		t.Fatalf("クリーンアップ失敗: %v", err)
+	}
 	defer func() { _ = db.CleanupOrderDB(ctx) }()
 
 	var publishCount int32
@@ -288,13 +301,13 @@ func TestRelay_ProcessMultipleMessages(t *testing.T) {
 
 	relay := NewRelay(db.Pool, testLogger(), mockPublisher)
 
-	// 複数のテストデータを挿入（UUID形式を使用）
+	// 複数のテストデータを挿入（動的にUUIDを生成）
 	for i := 0; i < 5; i++ {
-		id := fmt.Sprintf("11111111-1111-1111-1111-11111111111%d", i)
+		id := uuid.New().String()
 		_, err = db.Pool.Exec(ctx, `
 			INSERT INTO outbox (id, aggregate_type, aggregate_id, event_type, payload, status)
 			VALUES ($1, 'Test', $2, 'test.multiple', '{"test": true}', 'PENDING')
-		`, id, fmt.Sprintf("agg-%d", i))
+		`, id, fmt.Sprintf("agg-multi-%d", i))
 		if err != nil {
 			t.Fatalf("テストデータ挿入失敗: %v", err)
 		}
@@ -326,6 +339,11 @@ func TestRelay_PublishError(t *testing.T) {
 	if err != nil {
 		t.Fatalf("テストDB取得失敗: %v", err)
 	}
+
+	// テスト前にクリーンアップ
+	if err := db.CleanupOrderDB(ctx); err != nil {
+		t.Fatalf("クリーンアップ失敗: %v", err)
+	}
 	defer func() { _ = db.CleanupOrderDB(ctx) }()
 
 	// エラーを返すモックパブリッシャー
@@ -335,8 +353,8 @@ func TestRelay_PublishError(t *testing.T) {
 
 	relay := NewRelay(db.Pool, testLogger(), mockPublisher)
 
-	// テストデータを挿入（UUID形式を使用）
-	errorTestID := "22222222-2222-2222-2222-222222222222"
+	// テストデータを挿入（動的UUID）
+	errorTestID := uuid.New().String()
 	_, err = db.Pool.Exec(ctx, `
 		INSERT INTO outbox (id, aggregate_type, aggregate_id, event_type, payload, status)
 		VALUES ($1, 'Test', 'agg-error', 'test.error', '{"test": true}', 'PENDING')

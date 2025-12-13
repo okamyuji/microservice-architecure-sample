@@ -5,9 +5,10 @@ import (
 	"testing"
 	"time"
 
+	"microservice-architecture-sample/pkg/testutil"
+	"microservice-architecture-sample/services/inventory/internal/domain"
+
 	"github.com/google/uuid"
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/testutil"
-	"github.com/yujiokamoto/microservice-architecture-sample/services/inventory/internal/domain"
 )
 
 // TestPostgresInventoryRepository_FindByProductID 商品ID検索テスト

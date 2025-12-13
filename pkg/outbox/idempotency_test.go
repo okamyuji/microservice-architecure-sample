@@ -5,8 +5,9 @@ import (
 	"errors"
 	"testing"
 
+	"microservice-architecture-sample/pkg/testutil"
+
 	"github.com/google/uuid"
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/testutil"
 )
 
 // TestIdempotencyChecker_CheckAndMark 冪等性チェックテスト

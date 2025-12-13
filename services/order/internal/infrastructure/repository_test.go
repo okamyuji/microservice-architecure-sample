@@ -5,9 +5,10 @@ import (
 	"testing"
 	"time"
 
+	"microservice-architecture-sample/pkg/testutil"
+	"microservice-architecture-sample/services/order/internal/domain"
+
 	"github.com/google/uuid"
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/testutil"
-	"github.com/yujiokamoto/microservice-architecture-sample/services/order/internal/domain"
 )
 
 // TestPostgresOrderRepository_Save 注文保存テスト

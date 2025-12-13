@@ -1,4 +1,4 @@
-module github.com/yujiokamoto/microservice-architecture-sample
+module microservice-architecture-sample
 
 go 1.24.0
 

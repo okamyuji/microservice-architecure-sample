@@ -8,7 +8,7 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"github.com/yujiokamoto/microservice-architecture-sample/services/payment/internal/domain"
+	"microservice-architecture-sample/services/payment/internal/domain"
 )
 
 // PostgresPaymentRepository PostgreSQLを使用したPaymentRepository実装

@@ -6,11 +6,12 @@ import (
 	"os"
 	"testing"
 
+	"microservice-architecture-sample/pkg/outbox"
+	"microservice-architecture-sample/pkg/testutil"
+	"microservice-architecture-sample/services/payment/internal/domain"
+	"microservice-architecture-sample/services/payment/internal/infrastructure"
+
 	"github.com/google/uuid"
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/outbox"
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/testutil"
-	"github.com/yujiokamoto/microservice-architecture-sample/services/payment/internal/domain"
-	"github.com/yujiokamoto/microservice-architecture-sample/services/payment/internal/infrastructure"
 )
 
 // testLogger テスト用ロガー

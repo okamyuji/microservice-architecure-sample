@@ -9,9 +9,9 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/events"
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/outbox"
-	"github.com/yujiokamoto/microservice-architecture-sample/services/order/internal/domain"
+	"microservice-architecture-sample/pkg/events"
+	"microservice-architecture-sample/pkg/outbox"
+	"microservice-architecture-sample/services/order/internal/domain"
 )
 
 // CreateOrderInput 注文作成の入力

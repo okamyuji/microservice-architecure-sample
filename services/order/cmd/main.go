@@ -11,12 +11,12 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/database"
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/messaging"
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/outbox"
-	"github.com/yujiokamoto/microservice-architecture-sample/services/order/internal/application"
-	"github.com/yujiokamoto/microservice-architecture-sample/services/order/internal/infrastructure"
-	"github.com/yujiokamoto/microservice-architecture-sample/services/order/internal/interfaces"
+	"microservice-architecture-sample/pkg/database"
+	"microservice-architecture-sample/pkg/messaging"
+	"microservice-architecture-sample/pkg/outbox"
+	"microservice-architecture-sample/services/order/internal/application"
+	"microservice-architecture-sample/services/order/internal/infrastructure"
+	"microservice-architecture-sample/services/order/internal/interfaces"
 )
 
 func main() {

@@ -10,12 +10,13 @@ import (
 	"os"
 	"testing"
 
+	"microservice-architecture-sample/pkg/outbox"
+	"microservice-architecture-sample/pkg/testutil"
+	"microservice-architecture-sample/services/order/internal/application"
+	"microservice-architecture-sample/services/order/internal/infrastructure"
+
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/outbox"
-	"github.com/yujiokamoto/microservice-architecture-sample/pkg/testutil"
-	"github.com/yujiokamoto/microservice-architecture-sample/services/order/internal/application"
-	"github.com/yujiokamoto/microservice-architecture-sample/services/order/internal/infrastructure"
 )
 
 // testLogger テスト用ロガー

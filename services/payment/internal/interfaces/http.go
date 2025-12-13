@@ -6,7 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"github.com/yujiokamoto/microservice-architecture-sample/services/payment/internal/application"
+	"microservice-architecture-sample/services/payment/internal/application"
 )
 
 // PaymentResponse APIレスポンス内の決済
