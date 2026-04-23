@@ -1,10 +1,10 @@
 module microservice-architecture-sample
 
-go 1.24.0
+go 1.25.0
 
 require (
 	github.com/google/uuid v1.6.0
-	github.com/jackc/pgx/v5 v5.7.6
+	github.com/jackc/pgx/v5 v5.9.2
 	github.com/labstack/echo/v4 v4.14.0
 	github.com/nats-io/nats.go v1.47.0
 	github.com/testcontainers/testcontainers-go v0.40.0
