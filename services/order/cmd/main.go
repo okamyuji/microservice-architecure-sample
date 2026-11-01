@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"os"
 	"os/signal"
+	"sync/atomic"
 	"syscall"
 
 	"github.com/labstack/echo/v5"
@@ -90,10 +91,12 @@ func main() {
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	serverDone := make(chan struct{})
+	var startFailed atomic.Bool
 	go func() {
 		defer close(serverDone)
 		if err := sc.Start(ctx, e); err != nil {
 			logger.Error("HTTP server stopped", "error", err)
+			startFailed.Store(true)
 			// ポートの競合などで起動できないとき、HTTP を受けないまま process だけが残らないよう止める
 			quit <- syscall.SIGTERM
 		}
@@ -109,6 +112,10 @@ func main() {
 	<-serverDone
 
 	logger.Info("Order Service stopped")
+	// compose の restart: on-failure が再起動できるよう、起動の失敗は終了コードで伝える
+	if startFailed.Load() {
+		os.Exit(1)
+	}
 }
 
 // newHTTPServer は共通のミドルウェアを付けた echo を返す。起動前に組み立ての panic をテストで捕まえるために切り出している
