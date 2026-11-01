@@ -4,7 +4,7 @@ package interfaces
 import (
 	"net/http"
 
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 
 	"microservice-architecture-sample/services/inventory/internal/application"
 )
@@ -44,7 +44,7 @@ func (h *HTTPHandler) RegisterRoutes(e *echo.Echo) {
 }
 
 // GetInventory GET /inventory/:product_id を処理
-func (h *HTTPHandler) GetInventory(c echo.Context) error {
+func (h *HTTPHandler) GetInventory(c *echo.Context) error {
 	productID := c.Param("product_id")
 	if productID == "" {
 		return c.JSON(http.StatusBadRequest, ErrorResponse{
@@ -71,6 +71,6 @@ func (h *HTTPHandler) GetInventory(c echo.Context) error {
 }
 
 // HealthCheck GET /health を処理
-func (h *HTTPHandler) HealthCheck(c echo.Context) error {
+func (h *HTTPHandler) HealthCheck(c *echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]string{"status": "healthy"})
 }

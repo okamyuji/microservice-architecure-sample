@@ -15,7 +15,7 @@ import (
 	"microservice-architecture-sample/services/payment/internal/infrastructure"
 
 	"github.com/google/uuid"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 )
 
 // testLogger テスト用ロガー
@@ -72,7 +72,7 @@ func TestHTTPHandler_RegisterRoutes(t *testing.T) {
 	e := echo.New()
 	handler.RegisterRoutes(e)
 
-	routes := e.Routes()
+	routes := e.Router().Routes()
 	routeMap := make(map[string]bool)
 	for _, r := range routes {
 		routeMap[r.Method+" "+r.Path] = true
@@ -133,8 +133,7 @@ func TestHTTPHandler_GetPaymentByOrder_正常系(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/payments/order/"+orderID, nil)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
-	c.SetParamNames("order_id")
-	c.SetParamValues(orderID)
+	c.SetPathValues(echo.PathValues{{Name: "order_id", Value: orderID}})
 
 	if err := handler.GetPaymentByOrder(c); err != nil {
 		t.Fatalf("GetPaymentByOrder失敗: %v", err)
@@ -167,8 +166,7 @@ func TestHTTPHandler_GetPaymentByOrder_NotFound(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/payments/order/"+uuid.New().String(), nil)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
-	c.SetParamNames("order_id")
-	c.SetParamValues(uuid.New().String())
+	c.SetPathValues(echo.PathValues{{Name: "order_id", Value: uuid.New().String()}})
 
 	_ = handler.GetPaymentByOrder(c)
 
@@ -190,8 +188,7 @@ func TestHTTPHandler_GetPaymentByOrder_IDなし(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/payments/order/", nil)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
-	c.SetParamNames("order_id")
-	c.SetParamValues("")
+	c.SetPathValues(echo.PathValues{{Name: "order_id", Value: ""}})
 
 	_ = handler.GetPaymentByOrder(c)
 
