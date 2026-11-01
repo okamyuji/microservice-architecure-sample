@@ -14,7 +14,7 @@ import (
 	"microservice-architecture-sample/services/inventory/internal/application"
 	"microservice-architecture-sample/services/inventory/internal/infrastructure"
 
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 )
 
 // testLogger テスト用ロガー
@@ -72,7 +72,7 @@ func TestHTTPHandler_RegisterRoutes(t *testing.T) {
 	e := echo.New()
 	handler.RegisterRoutes(e)
 
-	routes := e.Routes()
+	routes := e.Router().Routes()
 	routeMap := make(map[string]bool)
 	for _, r := range routes {
 		routeMap[r.Method+" "+r.Path] = true
@@ -126,8 +126,7 @@ func TestHTTPHandler_GetInventory_正常系(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/inventory/PROD-001", nil)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
-	c.SetParamNames("product_id")
-	c.SetParamValues("PROD-001")
+	c.SetPathValues(echo.PathValues{{Name: "product_id", Value: "PROD-001"}})
 
 	if err := handler.GetInventory(c); err != nil {
 		t.Fatalf("GetInventory失敗: %v", err)
@@ -160,8 +159,7 @@ func TestHTTPHandler_GetInventory_NotFound(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/inventory/PROD-NOTEXIST", nil)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
-	c.SetParamNames("product_id")
-	c.SetParamValues("PROD-NOTEXIST")
+	c.SetPathValues(echo.PathValues{{Name: "product_id", Value: "PROD-NOTEXIST"}})
 
 	_ = handler.GetInventory(c)
 
@@ -183,8 +181,7 @@ func TestHTTPHandler_GetInventory_IDなし(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/inventory/", nil)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
-	c.SetParamNames("product_id")
-	c.SetParamValues("")
+	c.SetPathValues(echo.PathValues{{Name: "product_id", Value: ""}})
 
 	_ = handler.GetInventory(c)
 

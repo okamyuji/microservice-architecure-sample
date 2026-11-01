@@ -16,7 +16,7 @@ import (
 	"microservice-architecture-sample/services/order/internal/infrastructure"
 
 	"github.com/google/uuid"
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 )
 
 // testLogger テスト用ロガー
@@ -73,7 +73,7 @@ func TestHTTPHandler_RegisterRoutes(t *testing.T) {
 	e := echo.New()
 	handler.RegisterRoutes(e)
 
-	routes := e.Routes()
+	routes := e.Router().Routes()
 	routeMap := make(map[string]bool)
 	for _, r := range routes {
 		routeMap[r.Method+" "+r.Path] = true
@@ -282,8 +282,7 @@ func TestHTTPHandler_GetOrder_正常系(t *testing.T) {
 	getReq := httptest.NewRequest(http.MethodGet, "/orders/"+createResp.OrderID, nil)
 	getRec := httptest.NewRecorder()
 	getC := e.NewContext(getReq, getRec)
-	getC.SetParamNames("id")
-	getC.SetParamValues(createResp.OrderID)
+	getC.SetPathValues(echo.PathValues{{Name: "id", Value: createResp.OrderID}})
 
 	if err := handler.GetOrder(getC); err != nil {
 		t.Fatalf("GetOrder失敗: %v", err)
@@ -316,8 +315,7 @@ func TestHTTPHandler_GetOrder_NotFound(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/orders/"+uuid.New().String(), nil)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
-	c.SetParamNames("id")
-	c.SetParamValues(uuid.New().String())
+	c.SetPathValues(echo.PathValues{{Name: "id", Value: uuid.New().String()}})
 
 	_ = handler.GetOrder(c)
 
@@ -339,8 +337,7 @@ func TestHTTPHandler_GetOrder_IDなし(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/orders/", nil)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
-	c.SetParamNames("id")
-	c.SetParamValues("")
+	c.SetPathValues(echo.PathValues{{Name: "id", Value: ""}})
 
 	_ = handler.GetOrder(c)
 

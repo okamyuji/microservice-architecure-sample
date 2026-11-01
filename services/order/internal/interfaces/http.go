@@ -4,7 +4,7 @@ package interfaces
 import (
 	"net/http"
 
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v5"
 
 	"microservice-architecture-sample/services/order/internal/application"
 )
@@ -62,7 +62,7 @@ func (h *HTTPHandler) RegisterRoutes(e *echo.Echo) {
 }
 
 // CreateOrder POST /orders を処理
-func (h *HTTPHandler) CreateOrder(c echo.Context) error {
+func (h *HTTPHandler) CreateOrder(c *echo.Context) error {
 	var req CreateOrderRequest
 	if err := c.Bind(&req); err != nil {
 		return c.JSON(http.StatusBadRequest, ErrorResponse{
@@ -98,7 +98,7 @@ func (h *HTTPHandler) CreateOrder(c echo.Context) error {
 }
 
 // GetOrder GET /orders/:id を処理
-func (h *HTTPHandler) GetOrder(c echo.Context) error {
+func (h *HTTPHandler) GetOrder(c *echo.Context) error {
 	orderID := c.Param("id")
 	if orderID == "" {
 		return c.JSON(http.StatusBadRequest, ErrorResponse{
@@ -128,6 +128,6 @@ func (h *HTTPHandler) GetOrder(c echo.Context) error {
 }
 
 // HealthCheck GET /health を処理
-func (h *HTTPHandler) HealthCheck(c echo.Context) error {
+func (h *HTTPHandler) HealthCheck(c *echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]string{"status": "healthy"})
 }
