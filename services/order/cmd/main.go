@@ -87,18 +87,20 @@ func main() {
 			logger.Error("Failed to shutdown HTTP server", "error", err)
 		},
 	}
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	serverDone := make(chan struct{})
 	go func() {
 		defer close(serverDone)
 		if err := sc.Start(ctx, e); err != nil {
 			logger.Error("HTTP server stopped", "error", err)
+			// ポートの競合などで起動できないとき、HTTP を受けないまま process だけが残らないよう止める
+			quit <- syscall.SIGTERM
 		}
 	}()
 	logger.Info("HTTP server started", "port", port)
 
 	// シャットダウンシグナル待機
-	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 
 	logger.Info("Shutting down Order Service...")
