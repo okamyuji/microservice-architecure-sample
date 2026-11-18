@@ -4,8 +4,8 @@ go 1.26.10
 
 require (
 	github.com/google/uuid v1.6.0
-	github.com/jackc/pgx/v5 v5.12.0
-	github.com/labstack/echo/v5 v5.4.4
+	github.com/jackc/pgx/v5 v5.13.0
+	github.com/labstack/echo/v5 v5.4.6
 	github.com/nats-io/nats.go v1.55.0
 	github.com/testcontainers/testcontainers-go v0.45.0
 )
